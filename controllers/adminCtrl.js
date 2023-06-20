@@ -83,7 +83,7 @@ const getAllDoctorsController = async (req, res) => {
 
 
 //doctor account status
-const changeAccountStatusController = async() =>{
+const changeAccountStatusController = async(req,res) =>{
     try{
         const {doctorId, status} = req.body
         const doctor = await doctorModel.findByIdAndUpdate(doctorId,{status})
@@ -91,12 +91,12 @@ const changeAccountStatusController = async() =>{
         const notification = user.notification
         notification.push({
             type:'doctor-account-request-updated',
-            message: `Your Doctor Accout Request Has ${status}`,
+            message: `Your Doctor Account Request Has ${status}`,
             onClickPath:'/notification'
         })
         user.isDoctor = status === 'approved' ? true:false;
         await user.save();
-        res.statu(201).send({
+        res.status(201).send({
             success:true,
             message:'Account status Updated',
             data:doctor,
@@ -105,7 +105,7 @@ const changeAccountStatusController = async() =>{
     catch(error){
         console.log(error);
         res.status(500).send({success:false,
-        messsage:'Error in Accout Status',
+        messsage:'Error in Account Status',
         error})
     }
 }

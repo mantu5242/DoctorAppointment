@@ -1,8 +1,10 @@
 const appointmentModel = require("../models/appointmentModel");
+const doctorModel = require('../models/doctorModel')
 
-const getDoctorInfoController = async() => {
+const getDoctorInfoController = async(req,res) => {
     try{
         const doctor = await doctorModel.findOne({userId:req.body.userId});
+        console.log(doctorModel);
         res.status(200).send({success:true, message:'doctor data fetch success',data:doctor})
     }
     catch(error){
@@ -11,7 +13,11 @@ const getDoctorInfoController = async() => {
     }
 }
 
-const updateProfileController = async() => {
+
+
+
+
+const updateProfileController = async(req,res) => {
     try{
         const doctor = await doctorModel.findOne({userId:req.body.useId},req.body)
         res.status(201).send({success:true,message:'Doctor Profile Updated',data:doctor})
@@ -22,13 +28,19 @@ const updateProfileController = async() => {
     }
 }
 
-const getDoctorBYIdController = async() => {
+
+
+
+
+
+const getDoctorBYIdController = async(req,res) => {
     try{
-        const doctor = await doctorModel.findOne({_id:req.body.doctorId})
+        const doctor = await doctorModel.findOne({doctorId:req.body.doctorId})
+        console.log(req.body.doctorId)
         res.status(200).send({
             success:true,
             message:'Single Doc Info Fetched',
-            data:doctor,
+            data:doctor
         });
     }
     catch(error){
@@ -36,6 +48,12 @@ const getDoctorBYIdController = async() => {
         res.status(500).send({success:false, message:'Error in single doctor info',error})
     }
 }
+
+
+
+
+
+
 
 const doctorAppointmentsController = async(req,res) => {
     try{
@@ -55,7 +73,12 @@ const doctorAppointmentsController = async(req,res) => {
 }
 
 
-const updateStatusController = async() => {
+
+
+
+
+
+const updateStatusController = async(req,res) => {
     try{
         const {appointmentsId, status} = req.body
         const appointments = await appointmentModel.findByIdAndUpdate(appointmentsId,{status})
@@ -77,6 +100,10 @@ const updateStatusController = async() => {
         res.status(500).send({success:false,error,message:'Error In Update Status'})
     }
 }
+
+
+
+
 
 
 module.exports = {getDoctorInfoController, updateProfileController ,getDoctorBYIdController, doctorAppointmentsController,updateStatusController};

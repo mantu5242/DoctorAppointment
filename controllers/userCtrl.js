@@ -51,6 +51,7 @@ const loginController = async (req, res) => {
   }
 };
 
+
 const authController = async(req,res) => {
   try{
       // user.password = undefined;
@@ -72,11 +73,53 @@ const authController = async(req,res) => {
 }
 
 
+// const applyDoctorController = async(req,res) => {
+//     try{
+//       const  newDoctor = await doctorModel({...req.body,status:'pending'})
+//       await newDoctor.save();
+//       const adminUser = await userModel.findOne({isAdmin:true});
+//       console.log(userModel)
+//       if(!adminUser){
+//         res.status(401).send({message:'admin is null'})
+//       }
+//       else{
+
+//         const notification = adminUser.notification
+//         notification.push({
+//           type:'apply-doctor-request',
+//           message:`${newDoctor.firstName} ${newDoctor.lastName} Has applied For a Doctor Account`,
+//           data:{
+//                 doctorId: newDoctor._id,
+//                 name: newDoctor.firstName+" "+newDoctor.lastName,
+//                 onClickPath:'/admin/doctors'
+//               }
+//           })
+//       await userModel.findByIdAndUpdate(adminUser._id,{notification})
+//       res.status(201).send({message:'doctor Account Applied Successfully',success:true})
+//       }
+//       }
+//     catch(error){
+//       console.log(error);
+//       res.status(500).send({message:'Error while apply for Doctor',success:false,error})
+//     }
+// }
+
+
+
+
+
 const applyDoctorController = async(req,res) => {
-    try{
-      const  newDoctor = await doctorModel({...req.body,status:'pending'})
-      await newDoctor.save();
-      const adminUser = await userModel.findOne({isAdmin:true});
+  try{
+    const  newDoctor = await doctorModel({...req.body,status:'pending'})
+    await newDoctor.save();
+    console.log(newDoctor);
+    const adminUser = await userModel.findOne({isAdmin:true});
+    console.log(userModel)
+    if(!adminUser){
+      res.status(401).send({message:'admin is null'})
+    }
+    else{
+
       const notification = adminUser.notification
       notification.push({
         type:'apply-doctor-request',
@@ -87,14 +130,23 @@ const applyDoctorController = async(req,res) => {
               onClickPath:'/admin/doctors'
             }
         })
+
+        const timings = {
+          startTime: moment(req.body.startTime, 'HH:mm').format('HH:mm'),
+          endTime: moment(req.body.endTime, 'HH:mm').format('HH:mm'),
+        };
     await userModel.findByIdAndUpdate(adminUser._id,{notification})
     res.status(201).send({message:'doctor Account Applied Successfully',success:true})
     }
-    catch(error){
-      console.log(error);
-      res.status(500).send({message:'Error while apply for Doctor',success:false,error})
     }
+  catch(error){
+    console.log(error);
+    res.status(500).send({message:'Error while apply for Doctor',success:false,error})
+  }
 }
+
+
+
 
 // notification
 const getAllNotificationController = async(req,res) => {
@@ -175,7 +227,7 @@ const getAllDoctorsController = async(req,res) => {
     res.status(200).send({
       success: true,
       message:'Doctor list Fetch successfully',
-      data:doctors,
+      data:doctors
     })
   }
   catch(error){
