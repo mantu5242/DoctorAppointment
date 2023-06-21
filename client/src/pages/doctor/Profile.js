@@ -260,6 +260,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -293,49 +305,14 @@ const Profile = () => {
     }
   };
 
-  // const handleFinish = async (values) => {
-  //   try {
-  //     dispatch(showLoading());
-  //     const res = await axios.post(
-  //       '/api/v1/doctor/updateProfile',
-  //       {
-  //         // ...doctor,
-  //         ...values,
-  //         userId: user._id,
-  //         timings: [
-  //           moment(values.timings[0]).format('HH:mm'),
-  //           moment(values.timings[1]).format('HH:mm'),
-  //         ],
-  //       },
-  //       {
-  //         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-  //       }
-  //     );
-  //     dispatch(hideLoading());
-  //     console.log(res.data);
-  //     if (res.data.success) {
-  //       message.success(res.data.message);
-  //       setDoctor(res.data.data)
-  //       console.log(res.data);
-  //       navigate('/');
-  //       console.log('successfull');
-  //     } else {
-  //       message.error(res.data.success);
-  //     }
-  //   } catch (error) {
-  //     dispatch(hideLoading());
-  //     console.log(error);
-  //     message.error('Something Went Wrong');
-  //   }
-  // };
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
       const res = await axios.post(
         '/api/v1/doctor/updateProfile',
         {
-          ...doctor, // Send the existing doctor object
-          ...values, // Include the updated values from the form
+          // ...doctor,
+          ...values,
           userId: user._id,
           timings: [
             moment(values.timings[0]).format('HH:mm'),
@@ -347,10 +324,13 @@ const Profile = () => {
         }
       );
       dispatch(hideLoading());
+      console.log(res.data);
       if (res.data.success) {
         message.success(res.data.message);
-        setDoctor(res.data.data); // Update the doctor state with the updated profile data
+        setDoctor(res.data.data)
+        console.log(res.data);
         navigate('/');
+        console.log('successfull');
       } else {
         message.error(res.data.success);
       }
@@ -360,6 +340,54 @@ const Profile = () => {
       message.error('Something Went Wrong');
     }
   };
+
+
+
+
+
+
+  //   faltu code just for checking  
+   
+  // const [timings, setTimings] = useState([]); // State to store selected timings
+
+  // const handleTimingsChange = (value) => {
+  //   setTimings(value); // Update the selected timings in state
+  // };
+
+
+
+  // const handleFinish = async (values) => {
+  //   try {
+  //     dispatch(showLoading());
+  //     const res = await axios.post(
+  //       '/api/v1/doctor/updateProfile',
+  //       {
+  //         ...doctor, // Send the existing doctor object
+  //         ...values, // Include the updated values from the form
+  //         userId: user._id,
+  //         timings: [
+  //           moment(values.timings[0]).format('HH:mm'),
+  //           moment(values.timings[1]).format('HH:mm'),
+  //         ],
+  //       },
+  //       {
+  //         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  //       }
+  //     );
+  //     dispatch(hideLoading());
+  //     if (res.data.success) {
+  //       message.success(res.data.message);
+  //       setDoctor(res.data.data); // Update the doctor state with the updated profile data
+  //       navigate('/');
+  //     } else {
+  //       message.error(res.data.success);
+  //     }
+  //   } catch (error) {
+  //     dispatch(hideLoading());
+  //     console.log(error);
+  //     message.error('Something Went Wrong');
+  //   }
+  // };
 
 
 
@@ -378,7 +406,7 @@ const Profile = () => {
           className="m-3"
           initialValues={{
             ...doctor,
-            timings: [moment(doctor.timings[0], 'HH:mm'), moment(doctor.timings[0], 'HH:mm')],
+            timings: [moment(doctor.timings[0], 'HH:mm'), moment(doctor.timings[1], 'HH:mm')],
           }}
         >
           <h4 className="">Personal Details :</h4>
@@ -447,9 +475,13 @@ const Profile = () => {
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
-              <Form.Item label="Timing" name="timings" required rules={[{ required: true }]}>
+              {/* <Form.Item label="Timing" name="timings" required rules={[{ required: true }]}>
                 <TimePicker.RangePicker format="HH:MM" />
-              </Form.Item>
+              </Form.Item> */}
+              <Form.Item label="Timings" name="timings" required rules={[{ required: true }]}>
+                  <TimePicker.RangePicker format="HH:mm"  />
+              </Form.Item> 
+              
             </Col>
             <Col xs={24} md={24} lg={8}></Col>
             <Col xs={24} md={24} lg={8}>

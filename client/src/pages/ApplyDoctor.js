@@ -11,50 +11,29 @@ import moment from 'moment'
 
 const ApplyDoctor = () => {
     const {user} = useSelector(state => state.user)
+    // const [startTime, setStartTime] = useState('')
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    // const handleFinish = async(values) => {
-    //     try{
-    //         dispatch(showLoading());
-           
-    //         const res = await axios.post('/api/v1/user/apply-doctor',{...values,userId:user._id},
-    //         {
-    //             headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
-    //         })
-    //         dispatch(hideLoading());
-    //         console.log(values)
-    //         // console.log("rdfonweeff")
-    //         console.log(res.data)
-    //         // console.log(res.data.success)
-    //         if(res.data.success){
-    //             message.success(res.data.message)
-    //             // return <Navigate to ="/" />
-    //             navigate("/")
-    //             console.log("successfull")
-    //         }
-    //         else{
-    //             message.error(res.data.success)
-    //             // console.log("successfull but ferror occur")
-    //         }
-    //     }
-    //     catch(error){
-    //         dispatch(hideLoading());
-    //         console.log(error)
-    //         message.error("Something Went Wrong")
-    //     }
-        
-    // }
+   
 
 
-    const handleFinish = async(values) => {
+
+    
+// applydoctor handleFinish function
+ const handleFinish = async(values) => {
         try{
             dispatch(showLoading());
-            const startTime = moment(values.startTime[0]).format('HH:mm');
-            const endTime = moment(values.endTime[1]).format('HH:mm');
            
-            const res = await axios.post('/api/v1/user/apply-doctor',{...values,userId:user._id  ,startTime, endTime},
+            const res = await axios.post('/api/v1/user/apply-doctor',{
+                ...values,
+                userId:user._id,
+                timings: [
+                    values.timings[0].format('HH:mm'), 
+                    values.timings[1].format('HH:mm')
+                ],
+            },
             {
                 headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
             })
@@ -82,6 +61,58 @@ const ApplyDoctor = () => {
         
     }
 
+
+
+
+    // new changes
+
+    // const [timings, setTimings] = useState([]); // State to store selected timings
+
+    // const handleTimingsChange = (value) => {
+    //   setTimings(value); // Update the selected timings in state
+    // };
+  
+
+
+
+
+    // const handleFinish = async(values) => {
+    //     try{
+    //         dispatch(showLoading());
+
+    //         console.log(values.timings);
+    //         const formattedTimings = values.timings.map((timing) => moment(timing).format('HH:mm'));
+    // const res = await axios.post('/api/v1/user/apply-doctor', { ...values, timings: formattedTimings, userId: user._id }, {
+    //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    // });
+           
+    //         // const res = await axios.post('/api/v1/user/apply-doctor',{...values,userId:user._id},
+    //         // {
+    //         //     headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
+    //         // })
+    //         dispatch(hideLoading());
+    //         console.log(values)
+    //         // console.log("rdfonweeff")
+    //         console.log(res.data)
+    //         // console.log(res.data.success)
+    //         if(res.data.success){
+    //             message.success(res.data.message)
+    //             // return <Navigate to ="/" />
+    //             navigate("/")
+    //             console.log("successfull")
+    //         }
+    //         else{
+    //             message.error(res.data.success)
+    //             // console.log("successfull but ferror occur")
+    //         }
+    //     }
+    //     catch(error){
+    //         dispatch(hideLoading());
+    //         console.log(error)
+    //         message.error("Something Went Wrong")
+    //     }
+        
+    // }
 
 
   return (
@@ -139,11 +170,15 @@ const ApplyDoctor = () => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={8} >
-                    <Form.Item label="End Time" name="endTime" required rules={[{ required: true }]}>
+                    <Form.Item label="Timings" name="timings" required rules={[{ required: true }]}>
                         <TimePicker.RangePicker format="HH:mm"  />
-                    </Form.Item>
+                    </Form.Item>   
                 </Col>
-                <Col xs={24} md={24} lg={8}></Col>
+                {/* <Col xs={24} md={24} lg={8} >
+                    <Form.Item label="Timings" name="timings" required rules={[{ required: true }]}>
+                        <TimePicker.RangePicker format="HH:mm" onChange={handleTimingsChange} />
+                    </Form.Item>   
+                </Col> */}
                 <Col xs={24} md={24} lg={8}>
                 <button className='btn btn-primary form-btn' type='submit'>Submit</button>
                 </Col>

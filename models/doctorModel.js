@@ -108,15 +108,16 @@ const doctorSchema = new mongoose.Schema(
             default:'pending'
         },
         timings: {
-            startTime: {
-              type: String,
-              required: [true, 'Start time is required'],
-            },
-            endTime: {
-              type: String,
-              required: [true, 'End time is required'],
-            },
+            type: Object,
+            require:[true,'timing is require']
           },
+
+
+        // new changes
+    //     timings: {
+    //         type:[String],
+    //         require:[true,'timing is require']
+    //       },
     },   
     { timestamps:true}
 );

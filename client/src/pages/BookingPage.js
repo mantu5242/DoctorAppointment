@@ -19,16 +19,20 @@ const BookingPage = () => {
 
     
     const [doctors, setDoctors] = useState([]);
+    // const [startTime,endTime]=doctors?.timing;
+   
 
     const getUserData = async() => {
         try{
             // const res = await axios.post('/api/v1/user/getUserData',{},{headers: {Authorization: "Bearer " + localStorage.getItem('token')}})
-            const res = await axios.post('/api/v1/doctor/getDoctorById',{doctorId:useParams.doctorId}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+            const res = await axios.post('/api/v1/doctor/getDoctorById',{doctorId:params.doctorId}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
             console.log(doctors);
             // console.log(doctors);
             if(res.data.success){
               setDoctors(res.data.data);
               console.log(doctors)
+              console.log(doctors.timings)
+              console.log(typeof(doctors.timigs))
             }
         }
         catch(error){
@@ -62,6 +66,7 @@ const BookingPage = () => {
         }
         catch(error){
             console.log(error)
+            message.error("something went wrong")
         }
     }
 
@@ -96,6 +101,7 @@ const BookingPage = () => {
         catch(error){
             dispatch(hideLoading);
             console.log(error)
+            message.error('something went wrong')
         }
     
     }
@@ -109,8 +115,12 @@ const BookingPage = () => {
                 <div>
                     <h4>Dr.{doctors.firstName} {doctors.lastName}</h4>
                     <h4>Fees: {doctors.feesPerConsultation}</h4>
-                    {/* <h4>Timings: {doctors.timings[0]}-{doctors.timings[1]}</h4> */}
-                    {/* <div className='d-flex flex-column w-50'>
+                    {/* {console.log(doctors.timings)} */}
+                    {doctors.timings?.length ? <h4>Timings: {doctors.timings[0]}</h4>:""}
+
+                    {/* <h4>Timings: {doctors.timings}</h4> */}
+
+                    <div className='d-flex flex-column w-50'>
                         <DatePicker className='m-2' format = "DD-MM-YYYY" 
                         onChange = {
                             (values) => { 
@@ -129,7 +139,7 @@ const BookingPage = () => {
                          
                         )}
 
-                    </div> */}
+                    </div>
                 </div>
                 
             )}
