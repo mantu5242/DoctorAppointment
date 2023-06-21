@@ -3,23 +3,31 @@ import Layout from '../components/Layout'
 import axios from 'axios'
 import { Table, message} from 'antd';
 // import {render} from 'antd'
-import {moment} from 'moment'
+import moment from 'moment'
 
 const Appointments = () => {
     const [appointments, setAppointments] = useState([]);
     const getAppointments = async() => {
         try{
-            const res = await axios.post('/api/v1/user/user-appointments',
+            const res = await axios.get('/api/v1/user/user-appointments',
             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } },
             )
             if(res.data.success){
+                // console.log("res.data.data",res.data.data)
                 setAppointments(res.data.data);
+
+                console.log(res.data.data)
+                console.log(appointments)
+                // setAppointments(res.data.data);
+                
+                // console.log( "dofnsofn" +  appointments )
             }
         }
         catch(error){
             console.log(error)
         }
     }
+    // console.log(appointments.doctorInfo)
 
     useEffect( () => {
         getAppointments();
@@ -28,14 +36,14 @@ const Appointments = () => {
     const columns = [
         {
             title : 'ID',
-            dataIndex: 'id'
+            dataIndex: '_id'
         },
         {
             title: 'Name',
             dataIndex:'name',
             render:(text,record) => (
                 <span>
-                { record.doctorId.firstName} {record.doctorId.lastName}
+                { record.doctorInfo.firstName} {record.doctorInfo.lastName}
                 </span>
             )
         },
@@ -55,7 +63,7 @@ const Appointments = () => {
             dataIndex:'date',
             render:(text,record) => (
                 <span>
-                { moment(record.date).format('DD-MM-YYYY') /*&nbsp*/}
+                { moment(record.date).format('DD-MM-YYYY')+" "}
                 { moment(record.time).format('HH:mm') }
                 </span>
             )

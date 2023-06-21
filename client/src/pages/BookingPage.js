@@ -30,9 +30,7 @@ const BookingPage = () => {
             // console.log(doctors);
             if(res.data.success){
               setDoctors(res.data.data);
-              console.log(doctors)
-              console.log(doctors.timings)
-              console.log(typeof(doctors.timigs))
+          
             }
         }
         catch(error){
@@ -49,7 +47,7 @@ const BookingPage = () => {
     const handleAvailability = async() => {
         try{
             dispatch(showLoading)
-            const res = await axios.post('/api/v1/user/book-appointment',
+            const res = await axios.post('/api/v1/user/booking-availability',
             {
                 doctorId: params.doctorId,
                 date, time
@@ -77,12 +75,12 @@ const BookingPage = () => {
 
     const handleBooking = async() => {
         try{
-            setIsAvailable(true);
+            // setIsAvailable(true);
             if(!date && !time){
                 return alert("Date & Time Required")
             }
             dispatch(showLoading)
-            const res = await axios.post('/api/v1/user/booking-availability',
+            const res = await axios.post('/api/v1/user/book-appointment',
             {
                 doctorId: params.doctorId,
                 userId: user._id,
@@ -134,7 +132,7 @@ const BookingPage = () => {
                                                                                              setTime(moment(values).format('HH:mm'))
                                                                                             }}/>
                          <button className='btn btn-primary mt-2' onClick={handleAvailability}>check Availability</button>
-                         {!isAvailable && (
+                         {isAvailable && (
                              <button className='btn btn-dark mt-2' onClick={handleBooking}>Book Now</button>
                          
                         )}

@@ -1,5 +1,6 @@
 const appointmentModel = require("../models/appointmentModel");
-const doctorModel = require('../models/doctorModel')
+const doctorModel = require('../models/doctorModel');
+const userModel = require("../models/userModels");
 
 const getDoctorInfoController = async(req,res) => {
     try{
@@ -59,7 +60,10 @@ const doctorAppointmentsController = async(req,res) => {
     try{
         const doctor = await doctorModel.findOne({userId:req.body.userId})
         const appointments = await  appointmentModel.find({doctorId:doctor._id})
-        res.status(500).send({
+
+        res.setHeader('Cache-Control', 'no-store'); // Disable caching
+
+        res.status(200).send({
             success:true,
             message:'Doctor Appointment fetch Successfully',
             data: appointments
@@ -82,14 +86,16 @@ const updateStatusController = async(req,res) => {
     try{
         const {appointmentsId, status} = req.body
         const appointments = await appointmentModel.findByIdAndUpdate(appointmentsId,{status})
-        const user = await userModel.findOne ({_id: appointmentsId.userId})
+        const user = await userModel.findOne ({_id: appointments.userId})
+        res.setHeader('Cache-Control', 'no-store'); // Disable caching
+
         const notification = user.notification
-        user.notification.push({
+        notification.push({
           type:'Status Updated',
           message:`Your appointment has been updated ${status}`,
           onClickPath:'/doctor-appointments'
         })
-        await userModel.save();
+        await user.save();
         res.status(200).send({
             success:true,
             message:'Appointment Status Updated',

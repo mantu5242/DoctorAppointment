@@ -118,7 +118,7 @@
 
 
 
-import Layout from 'antd/es/layout/layout';
+import Layout from '../../components/Layout';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, message } from 'antd';
@@ -129,9 +129,8 @@ const Appointments = () => {
 
   const getAppointments = async () => {
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         '/api/v1/doctor/doctor-appointments',
-        {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }
@@ -153,7 +152,7 @@ const Appointments = () => {
     try {
       const res = await axios.post(
         '/api/v1/doctor/update-status',
-        { appointmentId: record._id, status },
+        { appointmentsId: record._id, status },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }
@@ -171,14 +170,14 @@ const Appointments = () => {
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'id',
+      dataIndex: '_id',
     },
     {
       title: 'Name',
       dataIndex: 'name',
       render: (text, record) => (
         <span>
-          {record.doctorId.firstName} {record.doctorId.lastName}
+          {record.doctorInfo.firstName} {record.doctorInfo.lastName}
         </span>
       ),
     },
