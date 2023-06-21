@@ -116,7 +116,7 @@ const BookingPage = () => {
                     <h4>Dr.{doctors.firstName} {doctors.lastName}</h4>
                     <h4>Fees: {doctors.feesPerConsultation}</h4>
                     {/* {console.log(doctors.timings)} */}
-                    {doctors.timings?.length ? <h4>Timings: {doctors.timings[0]}</h4>:""}
+                    {doctors.timings?.length ? <h4>Timings: {doctors.timings[0]} - {doctors.timings[1]}</h4>:""}
 
                     {/* <h4>Timings: {doctors.timings}</h4> */}
 
