@@ -23,6 +23,31 @@ const Layout  = ({children}) => {
         navigate('/notification')
     }
 
+    //user menu
+    const userMenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: "fa-solid fa-house"
+        },
+        {
+            name: 'Appointments',
+            path: '/appointments',
+            icon: "fa-solid fa-list fa-beat" 
+        },
+        {
+            name: 'Apply Doctor',
+            path: '/apply-doctor',
+            icon: "fa-solid fa-user-doctor"
+        },
+        {
+            name: 'profile',
+            path: `/user/profile/${user?._id}`,
+            icon: "fa-solid fa-user" 
+        }
+    ];
+
+
     //  doctor profile menu
 
     const DoctorMenu = [

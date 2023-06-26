@@ -2,7 +2,7 @@ import React , { useState , useEffect} from 'react'
 import Layout from '../components/Layout'
 import axios from 'axios'
 import { Table, message} from 'antd';
-// import {render} from 'antd'
+// import '../styles'
 import moment from 'moment'
 
 const Appointments = () => {

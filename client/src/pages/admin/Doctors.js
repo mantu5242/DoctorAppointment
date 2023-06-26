@@ -3,6 +3,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import Layout from './../../components/Layout'
 import { message,Table } from 'antd'
+import '../../styles/Layout.css'
 
 const Doctors = () => {
 
@@ -12,9 +13,9 @@ const Doctors = () => {
     try{
       const res = await axios.get('/api/v1/admin/getAllDoctors',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
       if(res.data.success){
-        console.log(res.data)
+        // console.log(res.data)
         setDoctors(res.data.data)
-        console.log(getDoctors);
+        // console.log(getDoctors);cd
       }
     }
     catch(error){
@@ -84,10 +85,14 @@ const columns = [
 ]
 
   return (
-    <Layout>
-        <h1 className="text-center m-2">Doctors List</h1>
+    <div>
+        <Layout>
+        <div className='tophead'><h1 className="text-center m-2">Doctors List</h1></div>
+        
         <Table columns={columns} dataSource={doctors}/>
-    </Layout>
+        </Layout>
+    </div>
+    
   )
 }
 

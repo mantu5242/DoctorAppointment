@@ -35,10 +35,10 @@ export const adminMenu = [
         name: 'Users',
         path: '/admin/users',
         icon: "fa-solid fa-user-doctor"
-    },
-    {
-        name: 'Profile',
-        path: 'profile/:id',
-        icon: "fa-solid fa-user" 
     }
+    // {
+    //     name: 'Profile',
+    //     path: 'profile/:id',
+    //     icon: "fa-solid fa-user" 
+    // }
 ]

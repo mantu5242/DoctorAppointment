@@ -3,7 +3,7 @@ import axios from 'axios';
 import Layout from "../components/Layout";
 import { Row } from "antd";
 import DoctorList from "../components/DoctorList";
-
+import '../styles/Layout.css'
 const HomePage = () => {
   const [doctors, setDoctors] = useState([]);
 
@@ -28,18 +28,22 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Layout>
-    <h1 className="text-center">HomePage</h1>
+    <div>
+         <Layout>
+         <div className="tophead"><h1 className="text-center">HomePage</h1></div>
+    
     <Row>
       {/* {doctors &&  doctors.map(doctor => (<DoctorList doctor={doctor}/>))} */}
 
       {doctors && doctors.map(doctor => (
-  <DoctorList key={doctor._id} doctor={doctor} />
-))}
+      <DoctorList key={doctor._id} doctor={doctor} />
+      ))}
       
       {/* <DoctorList/> */}
     </Row>
     </Layout>
+    </div>
+   
   );
 };
 

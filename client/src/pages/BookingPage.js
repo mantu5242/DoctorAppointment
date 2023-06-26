@@ -6,6 +6,7 @@ import { DatePicker, TimePicker, message } from 'antd'
 import { hideLoading, showLoading } from '../redux/features/alertSlices'
 import { useDispatch,useSelector } from 'react-redux'
 import moment from 'moment'
+import '../styles/Layout.css'
 // import { param } from '../../../routes/doctorRoutes'
 
 const BookingPage = () => {
@@ -106,8 +107,9 @@ const BookingPage = () => {
 
 
   return (
-    <Layout>
-        <h1>BookingPage</h1>
+    <div>
+        <Layout>
+        <div className='tophead'><h1>Book Your Appointment</h1></div>
         <div className='container m-2' >
             {doctors && (
                 <div>
@@ -144,6 +146,8 @@ const BookingPage = () => {
         </div>
         
     </Layout>
+    </div>
+    
   )
 }
 

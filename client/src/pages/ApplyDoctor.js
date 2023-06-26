@@ -1,6 +1,6 @@
 import { Col, Input, Row, TimePicker ,message, Form } from 'antd'
 import React,{useState} from 'react'
-// import { } from 'antd';
+import '../styles/Layout.css'
 // import { Form } from 'react-router-dom'; 
 import Layout from '../components/Layout';
 import { useDispatch, useSelector } from 'react-redux'
@@ -116,8 +116,9 @@ const ApplyDoctor = () => {
 
 
   return (
-    <Layout>
-        <h1>ApplyDoctor</h1>
+    <div>
+        <Layout>
+        <div className='tophead'> <h1>Apply For Doctor</h1></div>
         <Form layout ='vertical' onFinish={handleFinish} className='m-3'>
             <h4 className='' >Personal Details :</h4>
             <Row gutter={20}>
@@ -185,6 +186,8 @@ const ApplyDoctor = () => {
             </Row>
         </Form>
     </Layout>
+    </div>
+    
   )
 }
 

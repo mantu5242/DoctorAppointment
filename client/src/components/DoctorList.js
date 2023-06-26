@@ -1,11 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../styles/Layout.css'
 
 const DoctorList = ({doctor}) => {
 
     const navigate = useNavigate();
     
-    console.log(typeof(doctor.timings))
+    // console.log(typeof(doctor.timings))
 
   return (
     <div>

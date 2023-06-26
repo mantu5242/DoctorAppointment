@@ -280,6 +280,7 @@ import { Col, Input, Row, TimePicker, message, Form } from 'antd';
 import { showLoading, hideLoading } from '../../redux/features/alertSlices';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import '../../styles/Layout.css'
 
 const Profile = () => {
   const { user } = useSelector((state) => state.user);
@@ -397,8 +398,9 @@ const Profile = () => {
   }, []);
 
   return (
-    <Layout>
-      <h1>Manage Profile</h1>
+    <div>
+      <Layout>
+      <div className='tophead'><h1>Manage Profile</h1></div>
       {doctor && (
         <Form
           layout="vertical"
@@ -493,6 +495,7 @@ const Profile = () => {
         </Form>
       )}
     </Layout>
+    </div>
   );
 };
 

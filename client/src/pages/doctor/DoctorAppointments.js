@@ -123,6 +123,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, message } from 'antd';
 import moment from 'moment';
+import '../../styles/Layout.css'
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -227,10 +228,14 @@ const Appointments = () => {
   ];
 
   return (
-    <Layout>
-      <h1>Appointments List</h1>
-      <Table columns={columns} dataSource={appointments} />
-    </Layout>
+    <div>
+
+      <Layout>
+      <div className='tophead'><h1>Appointments List</h1></div>
+        
+        <Table columns={columns} dataSource={appointments} />
+      </Layout>
+    </div>
   );
 };
 
