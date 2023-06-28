@@ -1,194 +1,128 @@
-import { Col, Input, Row, TimePicker ,message, Form } from 'antd'
-import React,{useState} from 'react'
-import '../styles/Layout.css'
-// import { Form } from 'react-router-dom'; 
-import Layout from '../components/Layout';
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
-import { showLoading, hideLoading } from '../redux/features/alertSlices'
-import axios from 'axios';
+import { Col, Form, Input, message, Row,TimePicker } from 'antd'
+import { useDispatch,useSelector } from 'react-redux'
+
+import React from 'react'
+import Layout from '../components/Layout'
+import { useNavigate } from 'react-router-dom'
+import { hideLoading, showLoading } from '../redux/features/alertSlice'
+import axios from 'axios'
 import moment from 'moment'
 
 const ApplyDoctor = () => {
-    const {user} = useSelector(state => state.user)
-    // const [startTime, setStartTime] = useState('')
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    
-   
-
-
-
-    
-// applydoctor handleFinish function
- const handleFinish = async(values) => {
-        try{
-            dispatch(showLoading());
-           
-            const res = await axios.post('/api/v1/user/apply-doctor',{
-                ...values,
-                userId:user._id,
-                timings: [
-                    values.timings[0].format('HH:mm'), 
-                    values.timings[1].format('HH:mm')
-                ],
-            },
-            {
-                headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
-            })
-            dispatch(hideLoading());
-            console.log(values)
-            // console.log("rdfonweeff")
-            console.log(res.data)
-            // console.log(res.data.success)
-            if(res.data.success){
-                message.success(res.data.message)
-                // return <Navigate to ="/" />
-                navigate("/")
-                console.log("successfull")
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+    const {user}=useSelector(state=>state.user)
+    // handle finish
+    const handleFinish=async(values)=>{
+       try {
+        dispatch(showLoading())
+        const res=await axios.post('/api/v1/user/apply-doctor',{...values,userId:user._id,
+            timings: [
+                values.timings[0].format("HH:mm"),
+                values.timings[1].format("HH:mm"),
+              ]},{
+            headers:{
+                Authorization:`Bearer ${localStorage.getItem('token')}`
             }
-            else{
-                message.error(res.data.success)
-                // console.log("successfull but ferror occur")
-            }
+        })
+       
+        dispatch(hideLoading())
+        if(res.data.success){
+            navigate('/')
+            message.success(res.data.message)
+        }else{
+            message.error(res.data.message)
         }
-        catch(error){
-            dispatch(hideLoading());
-            console.log(error)
-            message.error("Something Went Wrong")
-        }
-        
+       } catch (error) {
+        dispatch(hideLoading())
+        console.log(error)
+        message.error("Something Went Wrong")
+       }
     }
-
-
-
-
-    // new changes
-
-    // const [timings, setTimings] = useState([]); // State to store selected timings
-
-    // const handleTimingsChange = (value) => {
-    //   setTimings(value); // Update the selected timings in state
-    // };
-  
-
-
-
-
-    // const handleFinish = async(values) => {
-    //     try{
-    //         dispatch(showLoading());
-
-    //         console.log(values.timings);
-    //         const formattedTimings = values.timings.map((timing) => moment(timing).format('HH:mm'));
-    // const res = await axios.post('/api/v1/user/apply-doctor', { ...values, timings: formattedTimings, userId: user._id }, {
-    //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    // });
-           
-    //         // const res = await axios.post('/api/v1/user/apply-doctor',{...values,userId:user._id},
-    //         // {
-    //         //     headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
-    //         // })
-    //         dispatch(hideLoading());
-    //         console.log(values)
-    //         // console.log("rdfonweeff")
-    //         console.log(res.data)
-    //         // console.log(res.data.success)
-    //         if(res.data.success){
-    //             message.success(res.data.message)
-    //             // return <Navigate to ="/" />
-    //             navigate("/")
-    //             console.log("successfull")
-    //         }
-    //         else{
-    //             message.error(res.data.success)
-    //             // console.log("successfull but ferror occur")
-    //         }
-    //     }
-    //     catch(error){
-    //         dispatch(hideLoading());
-    //         console.log(error)
-    //         message.error("Something Went Wrong")
-    //     }
-        
-    // }
-
-
   return (
-    <div>
-        <Layout>
-        <div className='tophead'> <h1>Apply For Doctor</h1></div>
-        <Form layout ='vertical' onFinish={handleFinish} className='m-3'>
-            <h4 className='' >Personal Details :</h4>
-            <Row gutter={20}>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "First Name" name = 'firstName' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='first name'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Last Name" name = 'lastName' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='last name'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Email" name = 'email' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='email'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Phone" name = 'phone' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='phone no.'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Address" name = 'address' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='address'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Website" name = 'website'>
-                        <Input type='text' placeholder='website'/>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <h4 >Professional Details :</h4>
-            <Row gutter={20}>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Specialization" name = 'specialization' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='your specialization'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Experience" name = 'experience' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='Your experience'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label = "Fees Per Consultation" name = 'feesPerConsultation' required rules = {[{required:true}]}>
-                        <Input type='text' placeholder='fees'/>
-                    </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8} >
-                    <Form.Item label="Timings" name="timings" required rules={[{ required: true }]}>
-                        <TimePicker.RangePicker format="HH:mm"  />
-                    </Form.Item>   
-                </Col>
-                {/* <Col xs={24} md={24} lg={8} >
-                    <Form.Item label="Timings" name="timings" required rules={[{ required: true }]}>
-                        <TimePicker.RangePicker format="HH:mm" onChange={handleTimingsChange} />
-                    </Form.Item>   
-                </Col> */}
-                <Col xs={24} md={24} lg={8}>
-                <button className='btn btn-primary form-btn' type='submit'>Submit</button>
-                </Col>
-            </Row>
-        </Form>
+    <Layout>
+        
+        <div>
+        <h1 style={{textAlign:'center'}}>Apply Doctor</h1>
+        <Form layout='vertical' onFinish={handleFinish}>
+      <h4 style={{margin:'30px 25px',fontWeight:'400'}}>Personal Details :</h4>
+        <Row>
+           
+            <Col xs={24} md={24} lg={8} >
+                <Form.Item label='First Name' name='firstName' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                    <Input type='text' placeholder='Enter First Name'/>
+                </Form.Item>
+                
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+                <Form.Item label='Last Name' name='lastName' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                    <Input type='text' placeholder='Enter Last Name'/>
+                </Form.Item>
+                
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+                <Form.Item label='Phone No' name='phone' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                    <Input type='text' placeholder='Enter phone number'/>
+                </Form.Item>
+                
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+                <Form.Item label='Email' name='email' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                    <Input type='text' placeholder='Enter email'/>
+                </Form.Item>
+                
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+                <Form.Item label='Website' name='website' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                    <Input type='text' placeholder='Enter website'/>
+                </Form.Item>
+                
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+                <Form.Item label='Address' name='address' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                    <Input type='text' placeholder='Enter address'/>
+                </Form.Item>
+                
+            </Col>
+        </Row>
+        <h4 style={{margin:'30px 25px',fontWeight:'400'}} >Profesional Details</h4>
+        <Row >
+           
+           <Col xs={24} md={24} lg={8} >
+               <Form.Item label='Specialization' name='specialization' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                   <Input type='text' placeholder='Add specialization'/>
+               </Form.Item>
+               
+           </Col>
+           <Col xs={24} md={24} lg={8}>
+               <Form.Item label='Experience' name='experience' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                   <Input type='text' placeholder='Add your experience'/>
+               </Form.Item>
+               
+           </Col>
+           <Col xs={24} md={24} lg={8}>
+               <Form.Item label='Fees Per Consultation' name='feesPerConsultation' required rules={[{required:true}]}  style={{margin:'10px'}}>
+                   <Input type='text' placeholder='Add fees per consultation'/>
+               </Form.Item>
+               
+           </Col>
+           <Col xs={24} md={24} lg={8}>
+            <Form.Item style={{margin:'10px'}} label="Timings" name="timings" required>
+              <TimePicker.RangePicker format="HH:mm" />
+            </Form.Item>
+          </Col>
+       </Row>
+      
+       <div style={{display:'flex',justifyContent:'end',margin:'25px 50px'}}>
+            <button type='submit' className='btn btn-primary' style={{width:'200px'}}>Submit</button>
+       </div>
+      </Form>
+        </div>
+     
+
+     
     </Layout>
-    </div>
-    
   )
 }
 
-export default ApplyDoctor;
+export default ApplyDoctor

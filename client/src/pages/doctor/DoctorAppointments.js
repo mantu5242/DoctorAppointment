@@ -1,242 +1,120 @@
-// import Layout from 'antd/es/layout/layout'
-// import React,{useState,useEffect} from 'react'
-// import axios from 'axios'
-// import { Table, message } from  'antd';
-// import {moment} from 'moment'
+import { message, Table } from 'antd'
+import React, { useEffect, useState } from 'react'
+import Layout from '../../components/Layout'
+import moment from 'moment'
+import axios from 'axios'
 
+const DoctorAppointments = () => {
+    const [appointments,setAppointments]=useState([])
 
-// const DoctorAppointments = () => {
-
-
-//     const Appointments = () => {
-//     const [appointments, setAppointments] = useState([]);
-//     const getAppointments = async() => {
-//         try{
-//             const res = await axios.post('/api/v1/doctor/doctor-appointments',
-//             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } },
-//             )
-//             if(res.data.success){
-//                 setAppointments(res.data.data);
-//             }
-//         }
-//         catch(error){
-//             console.log(error)
-            
-//         }
-//     }
-
-//     useEffect( () => {
-//         getAppointments();
-//     },[])
-    
-//     const handleStatus = async(record, status) =>{
-//         try{
-//             const  res = await axios.post('/api/v1/doctor/update-status',{appointmentId: record._id,status},
-//             { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-            
-//             )
-//             if(res.data.success){
-//                 message.success(res.data.message)
-//                 getAppointments();
-//             }
-//         }
-//         catch(error){
-//             console.log(error)
-//             message.error('Something Went Wrong')
-//         }
-//     }
-
-//     const columns = [
-//         {
-//             title : 'ID',
-//             dataIndex: 'id'
-//         },
-//         {
-//             title: 'Name',
-//             dataIndex:'name',
-//             render:(text,record) => (
-//                 <span>
-//                 { record.doctorId.firstName} {record.doctorId.lastName}
-//                 </span>
-//             )
-//         },
-//         {
-//             title: 'Phone',
-//             dataIndex:'phone',
-//             render:(text,record) => (
-//                 <span>
-//                 {
-//                     record.doctorInfo.phone
-//                 }
-//                 </span>
-//             )
-//         },
-//         {
-//             title: 'Date & Time',
-//             dataIndex:'date',
-//             render:(text,record) => (
-//                 <span>
-//                 { moment(record.date).format('DD-MM-YYYY')/*&nbsp*/ }
-//                 { moment(record.time).format('HH:mm') }
-//                 </span>
-//             )
-//         },
-//         {
-//             title:'Status',
-//             dataIndex:'status',
-//         },
-//         {
-//             title:'Actions',
-//             dataIndex:'actions',
-//             render : (text,record) => (
-//                 <div className='d-flex'>
-//                 {
-//                     render.status === 'pending' && (
-//                         <div className='d-flex'>
-//                             <button className='btn btn-success' onClick = {()=> handleStatus(record,'approved')}>approved</button>
-//                             <button className='btn btn-danger ml-2' onClick = {()=> handleStatus(record,'reject')}>Reject</button>
-//                         </div>
-//                     )
-//                 }
-//                 </div>
-//             )
-//         }
-//     ] 
-
-
-
-
-//   return (
-//     <Layout>
-//         <h1>Appointments List</h1>
-//         <Table columns={columns} dataSource={appointments}/>
-//     </Layout>
-//   )
-// }
-// }
-// export default DoctorAppointments;
-
-
-
-import Layout from '../../components/Layout';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Table, message } from 'antd';
-import moment from 'moment';
-import '../../styles/Layout.css'
-
-const Appointments = () => {
-  const [appointments, setAppointments] = useState([]);
-
-  const getAppointments = async () => {
-    try {
-      const res = await axios.get(
-        '/api/v1/doctor/doctor-appointments',
+    const columns=[
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        }
-      );
-      if (res.data.success) {
-        setAppointments(res.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-      message.error('Something Went Wrong');
-    }
-  };
-
-  useEffect(() => {
-    getAppointments();
-  }, []);
-
-  const handleStatus = async (record, status) => {
-    try {
-      const res = await axios.post(
-        '/api/v1/doctor/update-status',
-        { appointmentsId: record._id, status },
+            title:'ID',
+            dataIndex:'_id'
+        },
+        // {
+        //     title:'Name',
+        //     dataIndex:'name',
+        //     render:(text,record)=>(
+        //         <span>{record.doctorInfo.firstName} {record.doctorId.lastName}</span>
+        //     )
+        // },
+        // {
+        //     title:'Phone',
+        //     dataIndex:'phone',
+        //     render:(text,record)=>(
+        //         <span>{record.doctorInfo.phone} </span>
+        //     )
+        // },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        }
-      );
-      if (res.data.success) {
-        message.success(res.data.message);
-        getAppointments();
-      }
-    } catch (error) {
-      console.log(error);
-      message.error('Something Went Wrong');
-    }
-  };
+            title:'Date & Time',
+            dataIndex:'date',
+            render:(text,record)=>(
+                <span>
+                    {moment(record.date).format('DD-MM-YYYY')} &nbsp;
+                    {moment(record.time).format('HH:mm')}
+                </span>
+                
+            )
+        },
+        {
+            title:'Status',
+            dataIndex:'status',
+           
+        },
+        {
+            title:'Actions',
+            dataIndex:'actions',
+            render:(text,record)=>(
+                <div className="d-flex">
+                    {
+                        record.status === 'pending' && (
+                            <div className="d-flex">
+                                <button className="btn btn-success" onClick={()=>handleStatus(record,'approved')}>
+                                    Approved
+                                </button>
 
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: '_id',
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      render: (text, record) => (
-        <span>
-          {record.doctorInfo.firstName} {record.doctorInfo.lastName}
-        </span>
-      ),
-    },
-    {
-      title: 'Phone',
-      dataIndex: 'phone',
-      render: (text, record) => (
-        <span>{record.doctorInfo.phone}</span>
-      ),
-    },
-    {
-      title: 'Date & Time',
-      dataIndex: 'date',
-      render: (text, record) => (
-        <span>
-          {moment(record.date).format('DD-MM-YYYY')}
-          {/*&nbsp*/}
-          {moment(record.time).format('HH:mm')}
-        </span>
-      ),
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-    },
-    {
-      title: 'Actions',
-      dataIndex: 'actions',
-      render: (text, record) =>
-        record.status === 'pending' && (
-          <div className='d-flex'>
-            <button
-              className='btn btn-success'
-              onClick={() => handleStatus(record, 'approved')}
-            >
-              approved
-            </button>
-            <button
-              className='btn btn-danger ml-2'
-              onClick={() => handleStatus(record, 'reject')}
-            >
-              Reject
-            </button>
-          </div>
-        ),
-    },
-  ];
+                                <button className="btn btn-danger ms-2" onClick={()=>handleStatus(record,'reject')}>
+                                    Reject
+                                </button>
+                            </div>
+                        )
+                    }
+                </div>
+            )
+        }
+        
+    ]
+
+    const getAppointments=async()=>{
+        try {
+            const res=await axios.get('/api/v1/doctor/doctor-appointments',{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem('token')}`
+                }
+            })
+
+            if(res.data.success){
+                setAppointments(res.data.data)
+            }
+        } catch (error) {
+            console.log(error)
+ 
+        }
+    }
+
+    const handleStatus=async(record,status)=>{
+        try {
+            const res=await axios.post('/api/v1/doctor/update-appointmentStatus',
+            {appointmentsId:record._id,status},
+            {
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem('token')}`
+                }
+            }
+            )
+            if(res.data.success){
+                message.success(res.data.message)
+                getAppointments()
+            }
+        } catch (error) {
+            console.log(error)
+            message.error('Something went wrong')
+        }
+    }
+
+    useEffect(()=>{
+        getAppointments()
+    },[])
 
   return (
-    <div>
+    <Layout>
+      <div style={{height:'100vh'}}>
+        <h1>Appintment list</h1>
+        <Table columns={columns} dataSource={appointments}/>
+      </div>
+    </Layout>
+  )
+}
 
-      <Layout>
-      <div className='tophead'><h1>Appointments List</h1></div>
-        
-        <Table columns={columns} dataSource={appointments} />
-      </Layout>
-    </div>
-  );
-};
-
-export default Appointments;
+export default DoctorAppointments

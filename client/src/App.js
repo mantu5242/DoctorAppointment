@@ -1,46 +1,45 @@
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoute from "./components/PublicRoute";
 import ApplyDoctor from "./pages/ApplyDoctor";
 import Notification from "./pages/Notification";
 import Doctors from "./pages/admin/Doctors";
 import Users from "./pages/admin/Users";
 import Profile from "./pages/doctor/Profile";
-import BookingPage from "./pages/BookingPage";
-import Appointments from "./pages/Appointments";
+import Booking from "./pages/Booking";
+import Appointment from "./pages/Appointment";
 import DoctorAppointments from "./pages/doctor/DoctorAppointments";
-import UserProfile from "./pages/admin/userProfile";
 
 function App() {
-  const {loading} = useSelector(state => state.alerts);
+  const { loading } = useSelector((state) => state.alerts);
   return (
-    <>
+    <div className="App">
       <BrowserRouter>
-      {loading ? <Spinner/>:
-      <Routes>
-          <Route path="/apply-doctor" element={<ProtectedRoute><ApplyDoctor /></ProtectedRoute>}/>
-          <Route path="/admin/users" element={<ProtectedRoute><Users /></ProtectedRoute>}/>
-          <Route path="/doctor/profile/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
-          <Route path="/user/profile/:id" element={<ProtectedRoute><UserProfile /></ProtectedRoute>}/>
-          <Route path="/doctor/book-appointment/:doctorId" element={<ProtectedRoute><BookingPage /></ProtectedRoute>}/>
-          <Route path="/admin/doctors" element={<ProtectedRoute><Doctors /></ProtectedRoute>}/>
-          <Route path="/notification" element={<ProtectedRoute><Notification /></ProtectedRoute>}/>
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-          {/* <Route path='/' element={<HomePage/>}> </Route> */}
-          <Route path="/appointments" element={<ProtectedRoute><Appointments /></ProtectedRoute>} />
-          <Route path="/doctor-appointments" element={<ProtectedRoute><DoctorAppointments /></ProtectedRoute>} />
-          <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>}/>
-        </Routes>
-      }
-        
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Routes>
+            <Route path="/" element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
+            <Route path="/apply-doctor" element={<ProtectedRoutes><ApplyDoctor /></ProtectedRoutes>} />
+            <Route path="/notification" element={<ProtectedRoutes><Notification /></ProtectedRoutes>} />
+            <Route path="/admin/users" element={<ProtectedRoutes><Users /></ProtectedRoutes>} />
+            <Route path="/admin/doctors" element={<ProtectedRoutes><Doctors /></ProtectedRoutes>} />
+            <Route path="/doctor/profile/:id" element={<ProtectedRoutes><Profile /></ProtectedRoutes>} />
+            <Route path="/doctor/book-appointment/:doctorId" element={<ProtectedRoutes><Booking /></ProtectedRoutes>} />
+            <Route path="/doctor-appointments" element={<ProtectedRoutes><DoctorAppointments /></ProtectedRoutes>} />
+            <Route path="/appointments" element={<ProtectedRoutes><Appointment /></ProtectedRoutes>} />
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          </Routes>
+        )}
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

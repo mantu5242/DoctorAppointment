@@ -1,44 +1,58 @@
-export const userMenu = [
+export const userMenu=[
     {
-        name: 'Home',
-        path: '/',
-        icon: "fa-solid fa-house"
+        id:1,
+        name:"Home",
+        path:'/',
+        icon:"fa-solid fa-house",
     },
     {
-        name: 'Appointments',
-        path: '/appointments',
-        icon: "fa-solid fa-list fa-beat" 
+        id:2,
+        name:"Appoinments",
+        path:'/appointments',
+        icon:"fa-solid fa-list"
     },
     {
-        name: 'Apply Doctor',
-        path: '/apply-doctor',
-        icon: "fa-solid fa-user-doctor"
+        id:3,
+        name:"Apply Doctor",
+        path:'/apply-doctor',
+        icon:"fa-solid fa-user-doctor"
+    },
+   
+    {
+        id:4,
+        name:"Profile",
+        path:'/profile',
+        icon:"fa-solid fa-user"
+    },
+    
+
+]
+
+// admin menu
+export const adminMenu=[
+    {
+        id:1,
+        name:"Home",
+        path:'/',
+        icon:"fa-solid fa-house",
     },
     {
-        name: 'profile',
-        path: "profile/:id",
-        icon: "fa-solid fa-user" 
-    }
-];
-export const adminMenu = [
+        id:2,
+        name:"Doctors",
+        path:'/admin/doctors',
+        icon:"fa-solid fa-user-doctor"
+    },
+   
     {
-        name: 'Home',
-        path: '/',
-        icon: "fa-solid fa-house"
+        id:3,
+        name:"Users",
+        path:'/admin/users',
+        icon:"fa-solid fa-users"
     },
     {
-        name: 'Doctors',
-        path: '/admin/doctors',
-        icon: "fa-solid fa-list fa-beat" 
+        id:4,
+        name:"Profile",
+        path:'/profile',
+        icon:"fa-sharp fa-solid fa-user"
     },
-    {
-        name: 'Users',
-        path: '/admin/users',
-        icon: "fa-solid fa-user-doctor"
-    }
-    // {
-    //     name: 'Profile',
-    //     path: 'profile/:id',
-    //     icon: "fa-solid fa-user" 
-    // }
 ]
