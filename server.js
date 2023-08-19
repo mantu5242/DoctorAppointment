@@ -36,7 +36,6 @@ app.use('/api/v1/admin',require('./routes/admin-routes'))
 // doctor routes
 app.use('/api/v1/doctor',require('./routes/doctor-routes'))
 
-
 //  port
 const port=process.env.PORT || 8080
 

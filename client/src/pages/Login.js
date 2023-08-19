@@ -38,7 +38,7 @@ const Login = () => {
           alignItems: "center",
           justifyContent: "center",
           height: "100vh",
-          backgroundColor: " rgba(243, 211, 211, 0.573)",
+          backgroundColor: "rgb(239, 247, 238) ",
           boxShadow: " rgba(0, 0, 0, 0.16) 0px 1px 4px",
         }}
       >
@@ -47,19 +47,19 @@ const Login = () => {
             border: "1px solid lightgray",
             padding: "20px",
             borderRadius: "10px",
-            backgroundColor: " rgba(211, 211, 211, 0.563)",
+            backgroundColor: " rgb(186, 246, 181)",
             boxShadow: " rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
         >
           <Form layout="vertical" onFinish={onFinishHandle}>
-            <h2 style={{ textAlign: "center" }}>Login Form</h2>
+            <h2 style={{ textAlign: "center" ,color:"rgb(7, 48, 7)"}}>Login Form</h2>
 
             <Form.Item label="Email" name="email">
-              <Input type="text" />
+              <Input type="text" placeholder="abc@gmail.com" />
             </Form.Item>
 
             <Form.Item label="Password" name="password">
-              <Input type="password" />
+              <Input type="password" placeholder="password" />
             </Form.Item>
             <div
               style={{

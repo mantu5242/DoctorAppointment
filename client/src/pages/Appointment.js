@@ -69,7 +69,7 @@ const Appointment = () => {
   return (
     <Layout>
       <div style={{height:'100vh'}}>
-        <h1>Appintment list</h1>
+        <h1 style={{ textAlign: "center", padding: "20px" }}>Appointment list</h1>
         <Table columns={columns} dataSource={appointments}/>
       </div>
     </Layout>

@@ -6,52 +6,10 @@ import { Col, Form, Input, message } from 'antd';
 import "../../../src/styles/Layout.css";
 import axios from 'axios';
 import { hideLoading, showLoading } from '../../redux/features/alertSlices';
-// const UserProfile = () => {
-//   const dispatch = useDispatch()
-//   const [name, setName] = useState("");
-//   // const {users} = useSelector(state => state.users);
-//   // const { user } = useSelector(state => state.user);
 
+const UProfile = () => {
 
-//   const [user,setUser] = useState({})
-//   console.log("adnbdoeof")
-//   const getUser = async() => {
-//     console.log("gushaa")
-//     try{
-//         dispatch(showLoading())
-//         console.log("ander aaya")
-//         const res = await axios.post('/api/v1/user/getUserData',{_id:params.userId},
-//         {
-//             headers: { 
-//                 Authorization: `Bearer ${localStorage.getItem('token')}`
-//             }
-//         }
-//         )
-//         dispatch(hideLoading());
-//         if(res.data.success){
-//           console.log(res.data.data.name)
-//           setUser(res.data.data)
-//           setName(res.data.data.name)
-//           console.log(name)
-//             // console.log(res.data.data);
-//             console.log(user)
-//         }
-//     }
-//     catch(error){
-//         dispatch(hideLoading())
-//         localStorage.clear();
-//         console.log(error);
-//     }
-// }
-
-// useEffect(() => {
-//   getUser()
-// },[])
-
-
-
-const UserProfile = () => {
-  const [user,setUsers] = useState([]);
+    const [user,setUsers] = useState([]);
   const params = useParams();
   const dispatch = useDispatch();
   let findmatch= {};
@@ -85,15 +43,8 @@ const UserProfile = () => {
   },[])
 
 
-
-// if(!flag){
-//   getUser();
-//   flag=1;
-// }
-// console.log('name: ',findmatch)
-
-return (
-  <div>
+  return (
+    <div>
     <Layout>
       <div className='tophead'><h1>User Profile</h1></div>
       <div className='container'>
@@ -119,8 +70,7 @@ return (
       </div>
     </Layout>
   </div>
-)
+  )
 }
 
-export default UserProfile;
-
+export default UProfile
