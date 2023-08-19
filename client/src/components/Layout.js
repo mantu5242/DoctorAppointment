@@ -39,12 +39,12 @@ const Layout = ({children}) => {
             icon:"fa-solid fa-user-doctor"
         },
        
-        {
-            id:4,
-            name:"Profile",
-            path:`/user/profile/${user?._id}`,
-            icon:"fa-solid fa-user"
-        },
+        // {
+        //     id:4,
+        //     name:"Profile",
+        //     path:`/user/profile/${user?._id}`,
+        //     icon:"fa-solid fa-user"
+        // },
         
     
     ]
